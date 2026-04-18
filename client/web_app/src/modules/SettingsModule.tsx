@@ -6,14 +6,22 @@ import React, { useState } from 'react';
  */
 const SettingsModule: React.FC = () => {
     const [fontPref, setFontPref] = useState(localStorage.getItem('iris_font') || 'inter');
+    const [themePref, setThemePref] = useState(localStorage.getItem('iris_theme') || 'clinical');
     const [auditVerbosity, setAuditVerbosity] = useState(localStorage.getItem('iris_audit_verbosity') || 'NORMAL');
     const [requireDigitalSig, setRequireDigitalSig] = useState(localStorage.getItem('iris_require_sig') !== 'false');
     const [budgetAlertThreshold, setBudgetAlertThreshold] = useState(parseInt(localStorage.getItem('iris_budget_alert') || '15'));
+    const [analyticsSync, setAnalyticsSync] = useState(localStorage.getItem('iris_analytics_sync') === 'true');
 
     const handleFontChange = (font: string) => {
         setFontPref(font);
         localStorage.setItem('iris_font', font);
         window.dispatchEvent(new Event('theme-font-changed'));
+    };
+
+    const handleThemeChange = (theme: string) => {
+        setThemePref(theme);
+        localStorage.setItem('iris_theme', theme);
+        window.dispatchEvent(new Event('theme-changed'));
     };
 
     const handleSigToggle = (val: boolean) => {
@@ -29,7 +37,61 @@ const SettingsModule: React.FC = () => {
     return (
         <div className="module-container" style={{ padding: 0 }}>
             <div className="card-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-                {/* 1. BRANDING & TYPOGRAPHY */}
+                {/* 1. VISUAL EXPERIENCE & THEMES */}
+                <div className="card" style={{ gridColumn: 'span 2' }}>
+                    <div style={{ marginBottom: '20px' }}>
+                        <h3 style={{ margin: 0 }}><i className="fas fa-palette"></i> Interface Branding & Themes</h3>
+                        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '5px' }}>
+                            Customize the visual profile of the command center.
+                        </p>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+                        <div 
+                            onClick={() => handleThemeChange('clinical')}
+                            style={{ 
+                                padding: '20px', border: '1px solid var(--border-color)', borderRadius: '12px', cursor: 'pointer',
+                                background: themePref === 'clinical' ? '#e0f2fe' : '#fff',
+                                borderColor: themePref === 'clinical' ? '#01579b' : 'var(--border-color)',
+                                textAlign: 'center'
+                            }}
+                        >
+                            <div style={{ width: '40px', height: '40px', background: '#01579b', borderRadius: '50%', margin: '0 auto 10px' }}></div>
+                            <div style={{ fontWeight: 700, color: '#1e293b' }}>CLINICAL_LIGHT</div>
+                            <div style={{ fontSize: '0.6rem', color: '#64748b', marginTop: '5px' }}>Standard HIPAA/Medical UI.</div>
+                        </div>
+
+                        <div 
+                            onClick={() => handleThemeChange('midnight')}
+                            style={{ 
+                                padding: '20px', border: '1px solid var(--border-color)', borderRadius: '12px', cursor: 'pointer',
+                                background: themePref === 'midnight' ? '#1e293b' : '#0f172a',
+                                borderColor: themePref === 'midnight' ? '#10b981' : 'var(--border-color)',
+                                textAlign: 'center'
+                            }}
+                        >
+                            <div style={{ width: '40px', height: '40px', background: '#10b981', borderRadius: '50%', margin: '0 auto 10px' }}></div>
+                            <div style={{ fontWeight: 700, color: '#f8fafc' }}>MIDNIGHT_TERMINAL</div>
+                            <div style={{ fontSize: '0.6rem', color: '#94a3b8', marginTop: '5px' }}>High-density dark mode.</div>
+                        </div>
+
+                        <div 
+                            onClick={() => handleThemeChange('iris')}
+                            style={{ 
+                                padding: '20px', border: '1px solid var(--border-color)', borderRadius: '12px', cursor: 'pointer',
+                                background: themePref === 'iris' ? '#eef2ff' : '#fff',
+                                borderColor: themePref === 'iris' ? '#4f46e5' : 'var(--border-color)',
+                                textAlign: 'center'
+                            }}
+                        >
+                            <div style={{ width: '40px', height: '40px', background: '#4f46e5', borderRadius: '50%', margin: '0 auto 10px' }}></div>
+                            <div style={{ fontWeight: 700, color: '#1e1b4b' }}>DEEP_IRIS</div>
+                            <div style={{ fontSize: '0.6rem', color: '#4338ca', marginTop: '5px' }}>Official program branding.</div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 2. BRANDING & TYPOGRAPHY */}
                 <div className="card">
                     <div style={{ marginBottom: '20px' }}>
                         <h3 style={{ margin: 0 }}><i className="fas fa-font"></i> Typography Suite</h3>

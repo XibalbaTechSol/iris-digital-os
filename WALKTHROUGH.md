@@ -33,6 +33,12 @@ Implemented the [SnowflakeSync.js](file:///home/xibalba/iris-digital-os/server/s
 - **Cost-Share Dashboard:** Added a participant management portal in [FinancialsModule.tsx](file:///home/xibalba/iris-digital-os/client/web_app/src/modules/FinancialsModule.tsx) with an interactive **Mock ACH/Plaid** payment flow.
 - **ATS Automation:** Integrated automated **WORCS/BID Background Checks** into the [OnboardingModule.tsx](file:///home/xibalba/iris-digital-os/client/web_app/src/modules/OnboardingModule.tsx) recruitment pipeline.
 
+### 5. Interoperability & Data Exchange (Cures Act)
+- **HL7 FHIR R4 Standard:** Integrated a clinical interoperability hub ([interopController.js](server/controllers/interopController.js)) for secure data exchange with HIEs and EHRs (WellsKy, HHAeXchange).
+- **Cures Act EHI Export:** Implemented automated Electronic Health Information (EHI) export ([packet_export_service.js](server/services/orchestration/packet_export_service.js)) ensuring full regulatory compliance for patient data portability.
+- **Advanced EDI Suite:** Expanded financial logic with dedicated **837P Professional Claim** and **CMS-1500 PDF** engines for direct state billing.
+- **StateGateway Persistence:** Hardened the transmission queue ([state_gateway.js](server/services/orchestration/state_gateway.js)) for high-reliability data exchange with DHS and Sandata.
+
 ---
 
 ## 🛠 Technical Details

@@ -17,7 +17,7 @@ This document serves as the master technical registry for IRIS Digital OS. It ma
 | `documentController.js` | 11 | ✅ | CRUD for Document Vault; expanded for Document Debt (Phase 20). |
 | `evvController.js` | 4.2 | ✅ | GPS-verified clock events and Sandata sync triggers. |
 | `formController.js` | 14 | ✅ | Digital form submission and signature routing. |
-| `interopController.js` | 16 | ✅ | FHIR R4 data exchange and legacy EHR sync. |
+| `interopController.js` | 16 | ✅ | FHIR R4 data exchange and Cures Act EHI Export management. |
 | `marketingController.js` | 10 | ✅ | CRM Lead lifecycle and conversion analytics. |
 | `onboardingController.js` | 2.1 | ✅ | PFMS automated intake and participant/worker pairing; hardened for real DB. |
 | `pcstController.js` | 23 | ✅ | **[NEW]** Clinical PCST Unit calculation and draft management. |
@@ -45,19 +45,24 @@ This document serves as the master technical registry for IRIS Digital OS. It ma
 | `geo_service.js` | 17 | ✅ | Point-in-polygon geofence compliance verification. |
 | `pcst_service.js` | 23 | ✅ | **[NEW]** Orchestrates PCST unit persistence and RPA bot triggering. |
 | `worcs_service.js` | 2.3 | ✅ | Wisconsin Background Information Disclosure check orchestration. |
-| `fhir_adapter.js` | 9.3 | ✅ | HL7 FHIR 4.0 mapping layer for resources. |
+| `fhir_adapter.js` | 9.3 | ✅ | HL7 FHIR 4.0 mapping layer for Patient, Practitioner, and Bundle resources. |
+| `verify_fhir.js` | 16.2 | ✅ | **[NEW]** Schema validator for FHIR R4 clinical resources. |
 
 ### 🏗️ Orchestration (`/orchestration/`)
 | File | Phase | Status | Responsibility |
 | :--- | :--- | :--- | :--- |
-| `state_gateway.js` | 20 | 🏗️ | **[NEW]** Managed persistence for state API packets (Sandata/EDI). |
+| `state_gateway.js` | 20 | ✅ | Managed persistence for state API packets (Sandata/EDI). |
 | `service_bus.js` | 9.1 | ✅ | Redis-backed asynchronous event dispatcher. |
 | `referral_intake_service.js`| 1.2 | ✅ | State enrollment CSV ingestion and parsing. |
+| `packet_export_service.js` | 20.4 | ✅ | **[NEW]** Generates encrypted EHI clinical packets for Cures Act compliance. |
+
 
 ### 💰 Financials (`/financials/`)
 | File | Phase | Status | Responsibility |
 | :--- | :--- | :--- | :--- |
-| `edi_service.js` | 4.4 | ✅ | HIPAA-compliant 837P EDI X12 generator. |
+| `edi_service.js` | 4.4 | ✅ | HIPAA-compliant EDI X12 core logic. |
+| `edi_837p_service.js` | 4.4 | ✅ | **[NEW]** Specific generator for 837 Professional Healthcare Claims. |
+| `cms1500_service.js` | 4.5 | ✅ | **[NEW]** Paper claim (CMS-1500) PDF generation engine. |
 | `claim_engine.js` | 3.5 | ✅ | Automated claim adjudication and P-00708 validation. |
 | `state_xml_service.js` | 4.3 | ✅ | LTC-IES Professional (PR) Encounter generator. |
 

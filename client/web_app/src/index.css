@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Mono&display=swap');
 
 :root {
-  /* Medical Palette 2026 */
+  /* Medical Palette 2026 (Default / Clinical) */
   --primary: #01579b;
   --primary-light: #e0f2fe;
   --secondary: #334155;
@@ -25,8 +25,46 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
+/* Midnight Terminal Theme */
+.app-shell.theme-midnight {
+  --primary: #10b981;
+  --primary-light: rgba(16, 185, 129, 0.1);
+  --secondary: #0f172a;
+  --bg-app: #020617;
+  --bg-card: #1e293b;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --accent-action: #34d399;
+}
+
+/* Deep Iris Blue Theme */
+.app-shell.theme-iris {
+  --primary: #4f46e5;
+  --primary-light: #e0e7ff;
+  --secondary: #312e81;
+  --bg-app: #eef2ff;
+  --bg-card: #ffffff;
+  --text-primary: #1e1b4b;
+  --text-muted: #4338ca;
+  --border-color: #c7d2fe;
+  --accent-action: #6366f1;
+}
+
 .app-shell.font-ibm {
   --font-main: var(--font-ibm);
+}
+
+.app-shell.theme-midnight .module-header {
+  background: #0f172a;
+}
+
+.app-shell.theme-iris .module-header {
+  background: #4338ca;
+  color: #fff;
+}
+.app-shell.theme-iris .module-header h1 {
+  color: #fff;
 }
 
 * {

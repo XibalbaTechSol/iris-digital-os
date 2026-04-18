@@ -2,6 +2,8 @@ const db = require('../database/database');
 const FHIRAdapter = require('../services/compliance/fhir_adapter');
 const AuditService = require('../services/security/audit_service');
 
+const PacketExportService = require('../services/orchestration/packet_export_service');
+
 /**
  * IRIS Digital OS - FHIR Interop Controller
  * Goal: Secure, standardized data exchange (HL7 FHIR R4).
@@ -65,6 +67,45 @@ class InteropController {
         } catch (err) {
             console.error('[INTEROP_ERR]', err);
             res.status(500).json({ error: 'Failed to generate FHIR export' });
+        }
+    }
+
+    /**
+     * Export Electronic Health Information (EHI) - Cures Act Requirement
+     */
+    async exportEHIRecord(req, res) {
+        const { participantId } = req.params;
+        const operatorId = req.headers['x-operator-id'] || 'SYSTEM_ADMIN';
+
+        try {
+            // 1. Fetch all documents for this participant
+            const documentRows = await db.query('SELECT id, category as code, compliance_status as status FROM documents WHERE participant_id = ?', [participantId]);
+            
+            // 2. Generate Encrypted Packet
+            const packet = await PacketExportService.generateClinicalPacket(participantId, documentRows);
+
+            if (!packet.success) {
+                return res.status(400).json(packet);
+            }
+
+            // 3. HIPAA Audit
+            await AuditService.logEvent({
+                userId: operatorId,
+                action: 'EHI_DATA_EXCHANGE_RECORD',
+                moduleId: 'INTEROP_HUB',
+                metadata: {
+                    targetPatientId: participantId,
+                    packetName: packet.packetName,
+                    documentCount: packet.documentCount,
+                    security: packet.security
+                },
+                ipAddress: req.ip
+            });
+
+            res.json(packet);
+        } catch (err) {
+            console.error('[EHI_EXPORT_ERR]', err);
+            res.status(500).json({ error: 'Failed to generate EHI export' });
         }
     }
 

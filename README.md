@@ -307,22 +307,13 @@ iris-digital-os/
 | **Financials** | `FinancialsModule.tsx` | Payroll ledger with tax engine (automatic FICA/FUTA exemptions for family relationships). Cost-share tracking. Mock ACH/Plaid payment flow. |
 | **Billing** | `BillingModule.tsx` | HIPAA 837P EDI X12 claim generator. CMS-1500 paper claim mapper. Pre-claim audit step that validates visit data against DHS P-00708 budget rules before submission. |
 
-### FEA Operations Suite
-| Module | File | Description |
-|--------|------|-------------|
-| **Marketing CRM** | `MarketingModule.tsx` | Dual-view lead management (Kanban drag-and-drop + sortable Grid). Tracks referral sources (ADRC, Hospital Discharge, Social Media). Conversion pipeline with analytics. |
-| **Incident Tracking** | `IncidentModule.tsx` | 24-hour incident reporting for abuse/neglect/misappropriation. NLP-driven risk analysis. Automatic alert escalation for critical events. |
-| **Prior Authorization** | (via `CaseMgmtModule`) | DHS PA request submission and status tracking. Supports T1019 (Personal Care) and S5125 (Attendant Care) service codes. |
-| **Renewals** | `RenewalModule.tsx` | 365-day ISSP and LTC Functional Screen renewal cycle tracking. Automated deadline calculations from anniversary dates. |
-
-### Industrial Intelligence Suite
-| Module | File | Description |
-|--------|------|-------------|
-| **AI Suite** | `AISuiteModule.tsx` | **Clinical Scribe:** Ambient visit transcription → structured SOAP notes. **SDOH Engine:** Predictive risk flags for food/housing insecurity. **Policy Bot:** P-00708 policy Q&A. |
-| **Interop Hub** | `InteropModule.tsx` | HL7 FHIR R4 integration. Exports Patient, Practitioner, and Observation resources. Simulates bi-directional sync with WellsKy and HHAeXchange EHR systems. |
-| **Integrity Engine** | `IntegrityModule.tsx` | Machine Learning visit anomaly detection ("ghost billing" flags). Budget burn-rate profiling with audit scorecards. Real-time fraud flag dashboard. |
-| **Document Vault** | `DocumentVaultModule.tsx` | Encrypted clinical repository with AI-driven compliance scanning. Supports high-fidelity PDF preview (NATIVE/CUSTOM modes), automated publishing from signed digital forms, and HIPAA-compliant document debt auditing. |
-| **State Gateway** | (Backend only) | Persistent queue for state API transmissions. Manages retry logic for Sandata, ForwardHealth EDI, and WORCS background check uploads. |
+### Interoperability & Data Exchange (Cures Act Compliant)
+| Feature | Implementation | Description |
+|---------|----------------|-------------|
+| **FHIR R4 Hub** | `interopController.js` | Full HL7 FHIR R4 implementation for Patient, Practitioner, CarePlan, and Observation resources. Supports JSON and XML formats for HIE integration. |
+| **EHI Export** | `packet_export_service.js` | Automated "Electronic Health Information" export as required by the 21st Century Cures Act. Generates encrypted, machine-readable packets of all participant clinical data. |
+| **State Gateway** | `state_gateway.js` | High-reliability persistent queue for state API transmissions (Sandata, ForwardHealth, WORCS). |
+| **EDI Engine** | `edi_837p_service.js` | Native generation of X12 837P Professional claims for direct Medicaid billing. |
 
 ### Administrative Suite
 | Module | File | Description |
@@ -415,8 +406,14 @@ All endpoints are prefixed with `/api/v1`. The server runs in **Mock Mode** by d
 ### Interoperability (FHIR R4) — Requires API Key
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/v1/interop/fhir/Bundle/:participantId` | Export full FHIR Patient Bundle |
-| `GET` | `/api/v1/interop/fhir/:resourceType/:id` | Get specific FHIR resource |
+| `GET` | `/api/v1/interop/fhir/Bundle/:participantId` | Export full FHIR Patient Bundle (JSON/XML) |
+| `GET` | `/api/v1/interop/fhir/:resourceType/:id` | Get specific FHIR resource (Patient, Practitioner, etc.) |
+
+### Data Exchange (EHI / Cures Act) — Requires API Key
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/v1/interop/ehi/export/:participantId` | Full EHI Clinical Export (Cures Act compliant) |
+| `POST` | `/api/v1/billing/batch` | Submit 837P EDI batch claim to state |
 
 ### Marketing & Operations
 | Method | Endpoint | Description |

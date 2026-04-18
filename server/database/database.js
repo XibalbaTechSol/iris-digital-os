@@ -307,10 +307,11 @@ function initializeSchemas() {
 
         databaseInstance.get("SELECT COUNT(*) as count FROM documents", (err, row) => {
             if (row && row.count === 0) {
-                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, uploaded_at) VALUES ('DOC-101', 'P-1001', 'F-00075', 'F-00075 Referral.pdf', 'VERIFIED', '2026-04-10')`);
-                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, uploaded_at) VALUES ('DOC-102', 'P-1002', 'F-01293', 'F-01293 Choice.pdf', 'MISSING_SIGNATURE', '2026-04-12')`);
-                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, uploaded_at) VALUES ('DOC-103', 'P-1001', 'F-01309', 'F-01309 Rights.pdf', 'VERIFIED', '2026-04-14')`);
-                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, uploaded_at) VALUES ('DOC-104', 'P-1003', 'F-01201A', 'F-01201A ISSP.pdf', 'VERIFIED', '2026-04-15')`);
+                const dummyPDF = 'JVBERi0xLjQKJScAAAAr'; // Tiny dummy base64
+                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, content_base64, uploaded_at) VALUES ('DOC-101', 'P-1001', 'F-00075', 'F-00075 Referral.pdf', 'VERIFIED', ?, '2026-04-10')`, [dummyPDF]);
+                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, content_base64, uploaded_at) VALUES ('DOC-102', 'P-1002', 'F-01293', 'F-01293 Choice.pdf', 'MISSING_SIGNATURE', ?, '2026-04-12')`, [dummyPDF]);
+                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, content_base64, uploaded_at) VALUES ('DOC-103', 'P-1001', 'F-01309', 'F-01309 Rights.pdf', 'VERIFIED', ?, '2026-04-14')`, [dummyPDF]);
+                databaseInstance.run(`INSERT INTO documents (id, participant_id, category, filename, compliance_status, content_base64, uploaded_at) VALUES ('DOC-104', 'P-1003', 'F-01201A', 'F-01201A ISSP.pdf', 'VERIFIED', ?, '2026-04-15')`, [dummyPDF]);
             }
         });
 

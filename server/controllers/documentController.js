@@ -164,6 +164,25 @@ class DocumentController {
             res.status(500).json({ success: false, error: err.message });
         }
     }
+
+    /**
+     * Export Participant Clinical Packet (ZIP)
+     */
+    async exportPacket(req, res) {
+        try {
+            const { participantId } = req.params;
+            console.log(`[DOC_CTRL] EXPORTING_PACKET_FOR: ${participantId}`);
+            
+            // Mock zip export
+            res.json({ 
+                success: true, 
+                message: "Packet generation started.", 
+                downloadUrl: `/api/v1/documents/download/PACKET-${participantId}.zip` 
+            });
+        } catch (err) {
+            res.status(500).json({ success: false, error: err.message });
+        }
+    }
 }
 
 const docLifecycleService = require('../services/compliance/document_lifecycle_service');

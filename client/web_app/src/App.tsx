@@ -34,7 +34,7 @@ const App: React.FC = () => {
     const [activeModule, setActiveModule] = useState<ModuleType>('CASE_MGMT');
     const [systemHealth, setSystemHealth] = useState<'STABLE' | 'WARNING' | 'CRITICAL'>('STABLE');
     const [tenant, setTenant] = useState<TenantType>('FEA');
-    const [theme, setTheme] = useState('theme-medical');
+    const [theme, setTheme] = useState(localStorage.getItem('iris_theme') || 'clinical');
     const [fontClass, setFontClass] = useState(localStorage.getItem('iris_font') === 'ibm' ? 'font-ibm' : '');
     const { user, setRole } = useUser();
     const [alerts, setAlerts] = useState<any[]>([]);
@@ -110,8 +110,13 @@ const App: React.FC = () => {
             setFontClass(localStorage.getItem('iris_font') === 'ibm' ? 'font-ibm' : '');
         };
 
+        const handleThemeChange = () => {
+            setTheme(localStorage.getItem('iris_theme') || 'clinical');
+        };
+
         window.addEventListener('click', handleGlobalClick, { capture: true });
         window.addEventListener('theme-font-changed', handleFontChange);
+        window.addEventListener('theme-changed', handleThemeChange);
         window.addEventListener('beforeunload', handleBeforeUnload);
 
         const fetchAlerts = () => {
@@ -129,6 +134,7 @@ const App: React.FC = () => {
         return () => {
             window.removeEventListener('click', handleGlobalClick, { capture: true });
             window.removeEventListener('theme-font-changed', handleFontChange);
+            window.removeEventListener('theme-changed', handleThemeChange);
             window.removeEventListener('beforeunload', handleBeforeUnload);
             clearInterval(intervalId);
             clearInterval(alertInterval);
@@ -137,7 +143,7 @@ const App: React.FC = () => {
     }, [activeModule]);
 
     return (
-        <div className={`app-shell ${theme} ${fontClass}`}>
+        <div className={`app-shell theme-${theme} ${fontClass}`}>
             {/* 1. SIDEBAR: Clinical Navigation */}
             <aside className="sidebar">
                 <div className="sidebar-brand">
@@ -204,11 +210,15 @@ const App: React.FC = () => {
                     <select 
                         style={{ width: '100%', background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '6px', fontSize: '0.75rem', borderRadius: '4px' }}
                         value={theme}
-                        onChange={(e) => setTheme(e.target.value)}
+                        onChange={(e) => {
+                            const newTheme = e.target.value;
+                            setTheme(newTheme);
+                            localStorage.setItem('iris_theme', newTheme);
+                        }}
                     >
-                        <option value="theme-medical">CLINICAL_LIGHT</option>
-                        <option value="theme-terminal">COMMAND_CENTER</option>
-                        <option value="theme-hermes">HERMES_NIGHT</option>
+                        <option value="clinical">CLINICAL_LIGHT</option>
+                        <option value="midnight">MIDNIGHT_TERMINAL</option>
+                        <option value="iris">DEEP_IRIS</option>
                     </select>
                 </div>
             </aside>

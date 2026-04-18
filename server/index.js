@@ -152,6 +152,7 @@ app.patch('/api/v1/alerts/:id', alertController.updateAlert);
 // Phase 16: Interoperability (FHIR/HIE)
 app.get('/api/v1/interop/fhir/Bundle/:participantId', apiKeyAuth, interopController.exportPatientRecord);
 app.get('/api/v1/interop/fhir/:resourceType/:id', apiKeyAuth, interopController.getFHIRResource);
+app.get('/api/v1/interop/ehi/export/:participantId', apiKeyAuth, interopController.exportEHIRecord);
 
 // Phase 18: Clinical AI-Scribe
 app.post('/api/v1/clinical/scribe/process', scribeController.processSession);

@@ -41,15 +41,15 @@ const DocumentVaultModule: React.FC = () => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        fileName: file.name,
-                        fileType: file.type,
-                        fileData: base64String,
-                        participant: 'Manual Upload'
+                        filename: file.name,
+                        base64Content: base64String,
+                        participantId: 'P-1001', // Default to first mock participant for demo
+                        category: 'CLINICAL'
                     })
                 });
                 const result = await response.json();
                 if (result.success) {
-                    setDocuments([{ id: result.docId, participant: result.participant, type: file.name, status: 'VERIFIED', score: 100, lastAudit: new Date().toISOString().split('T')[0] }, ...documents]);
+                    setDocuments([result.document, ...documents]);
                 }
             } catch (err) {
                 console.error("Upload failed", err);
@@ -68,7 +68,10 @@ const DocumentVaultModule: React.FC = () => {
         if (filter === 'CRITICAL') return doc.score < 70;
         if (filter === 'VERIFIED') return doc.status === 'VERIFIED';
         return true;
-    }).filter(doc => doc.participant.toLowerCase().includes(searchTerm.toLowerCase()));
+    }).filter(doc => {
+        const participantName = doc.participant_id || doc.participant || '';
+        return participantName.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
     return (
         <div className="module-container" style={{ padding: '20px' }}>
