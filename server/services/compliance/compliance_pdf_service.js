@@ -82,7 +82,7 @@ class CompliancePDFService {
                     if (y < 50) break;
                 }
                 
-                return await pdfDoc.save();
+                return Buffer.from(await pdfDoc.save());
             }
 
             // Load official template and fill fields
@@ -135,7 +135,7 @@ class CompliancePDFService {
                 lastPage.drawImage(signatureImage, { x: 50, y: 80, width: 150, height: 40 });
             }
 
-            return await pdfDoc.save();
+            return Buffer.from(await pdfDoc.save());
         } catch (error) {
             console.error('[COMPLIANCE_PDF] GENERATION_FAILED:', error);
             throw error;

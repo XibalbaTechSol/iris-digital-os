@@ -47,6 +47,7 @@ This document serves as the master technical registry for IRIS Digital OS. It ma
 | `worcs_service.js` | 2.3 | ✅ | Wisconsin Background Information Disclosure check orchestration. |
 | `fhir_adapter.js` | 9.3 | ✅ | HL7 FHIR 4.0 mapping layer for Patient, Practitioner, and Bundle resources. |
 | `verify_fhir.js` | 16.2 | ✅ | **[NEW]** Schema validator for FHIR R4 clinical resources. |
+| `stitch_service.js` | 16.5 | ✅ | **[NEW]** HIE sync engine utilizing Stitch Health API for data exchange. |
 
 ### 🏗️ Orchestration (`/orchestration/`)
 | File | Phase | Status | Responsibility |

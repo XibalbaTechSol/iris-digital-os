@@ -121,6 +121,35 @@ class PFMSMapper {
     }
 
     /**
+     * Map data to F-01309 (IRIS Rights)
+     */
+    mapToF01309(data) {
+        return {
+            "form_type": "F-01309",
+            "fields": {
+                "PARTICIPANT_NAME": data.name.toUpperCase(),
+                "PARTICIPANT_MCI": data.mciId,
+                "VERIFICATION_DATE": new Date().toISOString().split('T')[0]
+            }
+        };
+    }
+
+    /**
+     * Map data to F-01293 (Transfer)
+     */
+    mapToF01293(data) {
+        return {
+            "form_type": "F-01293",
+            "fields": {
+                "PARTICIPANT_NAME": data.participant?.name.toUpperCase() || '',
+                "PARTICIPANT_MCI": data.participant?.mciId || '',
+                "TRANSFER_FROM": data.ica || 'PREVIOUS_ICA',
+                "TRANSFER_TO": "NEW_ICA_PENDING"
+            }
+        };
+    }
+
+    /**
      * Map data to Federal I-9 (Employment Eligibility Verification)
      */
     mapToI9(data) {

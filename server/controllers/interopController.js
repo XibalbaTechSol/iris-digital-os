@@ -3,12 +3,26 @@ const FHIRAdapter = require('../services/compliance/fhir_adapter');
 const AuditService = require('../services/security/audit_service');
 
 const PacketExportService = require('../services/orchestration/packet_export_service');
+const StitchService = require('../services/interop/stitch_service');
 
 /**
  * IRIS Digital OS - FHIR Interop Controller
  * Goal: Secure, standardized data exchange (HL7 FHIR R4).
  */
 class InteropController {
+    /**
+     * Trigger secure clinical record sync with regional HIE via Stitch.
+     */
+    async triggerStitchSync(req, res) {
+        const { participantId } = req.params;
+        try {
+            const result = await StitchService.syncParticipantData(participantId);
+            res.json(result);
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+
     /**
      * Export a full Patient Bundle (Clinical Summary).
      */

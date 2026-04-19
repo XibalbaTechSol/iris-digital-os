@@ -153,6 +153,7 @@ app.patch('/api/v1/alerts/:id', alertController.updateAlert);
 app.get('/api/v1/interop/fhir/Bundle/:participantId', apiKeyAuth, interopController.exportPatientRecord);
 app.get('/api/v1/interop/fhir/:resourceType/:id', apiKeyAuth, interopController.getFHIRResource);
 app.get('/api/v1/interop/ehi/export/:participantId', apiKeyAuth, interopController.exportEHIRecord);
+app.post('/api/v1/interop/stitch/sync/:participantId', apiKeyAuth, (req, res) => interopController.triggerStitchSync(req, res));
 
 // Phase 18: Clinical AI-Scribe
 app.post('/api/v1/clinical/scribe/process', scribeController.processSession);

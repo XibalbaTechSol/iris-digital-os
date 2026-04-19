@@ -311,6 +311,7 @@ iris-digital-os/
 | Feature | Implementation | Description |
 |---------|----------------|-------------|
 | **FHIR R4 Hub** | `interopController.js` | Full HL7 FHIR R4 implementation for Patient, Practitioner, CarePlan, and Observation resources. Supports JSON and XML formats for HIE integration. |
+| **Stitch HIE Sync** | `stitch_service.js` | Secure, HIPAA-compliant clinical record exchange with regional HIEs utilizing the Stitch Health API gateway. |
 | **EHI Export** | `packet_export_service.js` | Automated "Electronic Health Information" export as required by the 21st Century Cures Act. Generates encrypted, machine-readable packets of all participant clinical data. |
 | **State Gateway** | `state_gateway.js` | High-reliability persistent queue for state API transmissions (Sandata, ForwardHealth, WORCS). |
 | **EDI Engine** | `edi_837p_service.js` | Native generation of X12 837P Professional claims for direct Medicaid billing. |
@@ -408,6 +409,7 @@ All endpoints are prefixed with `/api/v1`. The server runs in **Mock Mode** by d
 |--------|----------|-------------|
 | `GET` | `/api/v1/interop/fhir/Bundle/:participantId` | Export full FHIR Patient Bundle (JSON/XML) |
 | `GET` | `/api/v1/interop/fhir/:resourceType/:id` | Get specific FHIR resource (Patient, Practitioner, etc.) |
+| `POST` | `/api/v1/interop/stitch/sync/:participantId` | Sync clinical record with HIE via Stitch |
 
 ### Data Exchange (EHI / Cures Act) — Requires API Key
 | Method | Endpoint | Description |
