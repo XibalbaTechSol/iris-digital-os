@@ -58,15 +58,17 @@ Wisconsin IRIS agencies currently rely on a patchwork of state systems (WISITS, 
 
 ### Key Dependencies (`package.json`)
 ```
-express ^4.18.2    — HTTP server and routing
-sqlite3 ^6.0.1     — Embedded SQL database
-pdf-lib ^1.17.1    — PDF form manipulation
-helmet ^7.1.0      — HTTP security headers
-cors ^2.8.5        — Cross-origin resource sharing
-openai ^4.24.1     — AI/ML integration
-redis ^4.6.10      — Service bus (event-driven architecture)
-playwright ^1.40.1  — Browser automation for state portals
-dotenv ^16.3.1     — Environment variable management
+express ^4.18.2          — HTTP server and modular routing
+express-async-errors     — Enhanced async error handling
+morgan                   — HTTP request logging
+sqlite3 ^6.0.1           — Embedded SQL database
+pdf-lib ^1.17.1          — PDF form manipulation
+helmet ^7.1.0            — HTTP security headers
+cors ^2.8.5              — Cross-origin resource sharing
+openai ^4.24.1           — AI/ML integration
+redis ^4.6.10            — Service bus (event-driven architecture)
+playwright ^1.40.1       — Browser automation for state portals
+dotenv ^16.3.1           — Environment variable management
 ```
 
 ---
@@ -86,25 +88,48 @@ git clone <repo-url> && cd iris-digital-os
 # Install server dependencies
 npm install
 
-# Start the backend (Mock Mode)
-npm run dev
-# Server starts on http://localhost:3001
+# Start the backend (Modular Architecture)
+npm start
+# Server starts on http://localhost:3100
 
 # In a separate terminal, install and start the frontend
 cd client/web_app
 npm install
-npm start
+PORT=3000 npm start
 # React app starts on http://localhost:3000
+```
+
+---
+
+## 📂 Project Structure
+
+```
+/iris-os-fresh/
+├── server/
+│   └── src/
+│       ├── config/           # Database initialization and configs
+│       ├── controllers/      # Modular business logic
+│       ├── middleware/       # Shared Express middlewares
+│       ├── routes/           # RESTful API route definitions
+│       ├── services/         # Orchestration and clinical services
+│       ├── utils/            # Shared utilities (logger, etc.)
+│       └── index.js          # Unified entry point
+├── client/
+│   └── web_app/              # Main React application
+├── automation/               # State-portal scrapers & bots
+├── database/                 # Raw SQL schemas
+├── services/                 # Cross-platform core services
+└── docs/                     # Architecture & Security documentation
 ```
 
 ### Verifying the Installation
 ```bash
 # Health check
-curl http://localhost:3001/health
+curl http://localhost:3100/health
 # Expected: {"status":"active","domain":"IRIS_DIGITAL_OS","mode":"MOCK"}
 
 # Fetch participants
-curl http://localhost:3001/api/v1/case/participants
+curl http://localhost:3100/api/v1/case/participants
 # Expected: JSON array of seeded participants
 ```
 

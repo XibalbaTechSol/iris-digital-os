@@ -4,7 +4,7 @@
  * Logic: Calculate earned-but-unpaid wages after AI-verified EVV shifts.
  */
 
-const { logAction } = require('../../server/middleware/audit');
+const { logAction } = require('../../server/src/middleware/audit');
 
 class WagesNowService {
     /**

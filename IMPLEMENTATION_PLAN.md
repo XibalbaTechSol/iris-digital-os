@@ -41,6 +41,19 @@ Based on competitive research into industry leaders (AxisCare, TMG, HCHB), this 
 
 ---
 
+### Phase 23: Architectural Modularization (Medicaid LTSS OS Standard)
+
+#### [REFAC] Backend Structure
+- Migrate to a formal `server/src/` pattern.
+- Decouple routes from `index.js` into 17+ modular route files.
+- Centralize database configuration and initialization logic.
+
+#### [NEW] Reliability Middleware
+- Integrate `express-async-errors` for global promise safety.
+- Implement a standardized `errorHandler.js` for consistent API failure responses.
+
+---
+
 ## Open Questions
 
 1. **837P NPI:** Should I use a static mock NPI/Tax ID for the Billing Provider loops, or should this be dynamically pulled from the Tenant profile?

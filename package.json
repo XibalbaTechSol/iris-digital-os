@@ -2,10 +2,10 @@
   "name": "iris-digital-os",
   "version": "0.2.0",
   "description": "Unified AI-First Digital Operating System for Wisconsin IRIS Program",
-  "main": "server/index.js",
+  "main": "server/src/index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "node server/src/index.js",
+    "dev": "nodemon server/src/index.js",
     "scrape": "node automation/wisits_scraper.js"
   },
   "dependencies": {
@@ -14,7 +14,9 @@
     "csv-parse": "^5.5.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
     "helmet": "^7.1.0",
+    "morgan": "^1.10.1",
     "openai": "^4.24.1",
     "pdf-lib": "^1.17.1",
     "pg": "^8.11.3",

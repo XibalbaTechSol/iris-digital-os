@@ -4,7 +4,7 @@
  * Compliance: DHS P-00708 (3-business-day welcome call mandate).
  */
 
-const { logAction } = require('../../server/middleware/audit');
+const { logAction } = require('../../server/src/middleware/audit');
 
 class TransferSentinel {
     constructor(dbPool) {

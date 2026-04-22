@@ -34,17 +34,24 @@ Implemented the [SnowflakeSync.js](file:///home/xibalba/iris-digital-os/server/s
 - **ATS Automation:** Integrated automated **WORCS/BID Background Checks** into the [OnboardingModule.tsx](file:///home/xibalba/iris-digital-os/client/web_app/src/modules/OnboardingModule.tsx) recruitment pipeline.
 
 ### 5. Interoperability & Data Exchange (Cures Act)
-- **HL7 FHIR R4 Standard:** Integrated a clinical interoperability hub ([interopController.js](server/controllers/interopController.js)) for secure data exchange with HIEs and EHRs (WellsKy, HHAeXchange).
-- **Cures Act EHI Export:** Implemented automated Electronic Health Information (EHI) export ([packet_export_service.js](server/services/orchestration/packet_export_service.js)) ensuring full regulatory compliance for patient data portability.
+- **HL7 FHIR R4 Standard:** Integrated a clinical interoperability hub ([interopController.js](server/src/controllers/interopController.js)) for secure data exchange with HIEs and EHRs (WellsKy, HHAeXchange).
+- **Cures Act EHI Export:** Implemented automated Electronic Health Information (EHI) export ([packet_export_service.js](server/src/services/orchestration/packet_export_service.js)) ensuring full regulatory compliance for patient data portability.
 - **Advanced EDI Suite:** Expanded financial logic with dedicated **837P Professional Claim** and **CMS-1500 PDF** engines for direct state billing.
-- **StateGateway Persistence:** Hardened the transmission queue ([state_gateway.js](server/services/orchestration/state_gateway.js)) for high-reliability data exchange with DHS and Sandata.
+- **StateGateway Persistence:** Hardened the transmission queue ([state_gateway.js](server/src/services/orchestration/state_gateway.js)) for high-reliability data exchange with DHS and Sandata.
+
+### 6. Backend Modularization (Medicaid LTSS OS Pattern)
+Successfully refactored the monolith Express backend into a professional, modular architecture:
+- **`src/` Encapsulation**: Consolidated all business logic, routes, and services under `server/src/`.
+- **Modular Routing**: Extracted all API endpoints into 17 dedicated route files in `server/src/routes/`.
+- **Enhanced Reliability**: Integrated `express-async-errors` for global promise handling and a centralized `errorHandler.js` middleware.
+- **Bootstrapping Logic**: Moved database initialization to a standalone `init_db.js` module.
 
 ---
 
 ## 🛠 Technical Details
 
 - **Service Bus:** Enforced policies are now decentralized across the OS spine.
-- **Standardization:** Integrated [FHIRAdapter.js](file:///home/xibalba/iris-digital-os/server/services/compliance/fhir_adapter.js) patterns for enterprise data exchange.
+- **Standardization:** Integrated [FHIRAdapter.js](file:///home/xibalba/iris-digital-os/server/src/services/compliance/fhir_adapter.js) patterns for enterprise data exchange.
 - **Validation:** All claim generation includes a look-up step to verified registries.
 
 ## Status Summary

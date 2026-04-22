@@ -26,7 +26,7 @@ const IntakeModule: React.FC = () => {
         fetchReferrals();
     }, [fetchReferrals]);
 
-    const statuses = ['RECEIVED', 'WELCOME_CALL_COMPLETE', 'ORIENTATION_SCHEDULED', 'DOCS_COLLECTED', 'READY_FOR_SCREEN'];
+    const statuses = ['RECEIVED', 'WELCOME_CALL_LOGGED', 'WELCOME_CALL_COMPLETE', 'ORIENTATION_SCHEDULED', 'DOCS_COLLECTED', 'READY_FOR_SCREEN'];
 
     const getStatusLabel = (status: string) => status.replace(/_/g, ' ');
 

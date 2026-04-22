@@ -83,6 +83,15 @@
     - [x] Create `test_organizations.py`
     - [x] Validate role-based portal isolation and critical clinical paths
 
-## Phase 23: Advanced Security Intelligence *(CURRENT)*
+## Phase 23: Advanced Security Intelligence & Architecture Refinement (COMPLETED)
+- [x] **Medicaid LTSS Backend Restructure**
+    - [x] Modularize all Express routes into `server/src/routes/`
+    - [x] Implement centralized `errorHandler` and `express-async-errors`
+    - [x] Consolidate services and controllers into `src/` directory
+- [x] **Kanban Board Optimization**
+    - [x] Fix `IntakeModule.tsx` to include `WELCOME_CALL_LOGGED` status
+    - [x] Standardize pipeline stages across FEA and ICA roles
+
+## Phase 24: Advanced Security Intelligence *(CURRENT)*
 - [ ] **Predictive Threat Modeling**
 - [ ] **Biometric Auth Simulation**
